@@ -4,11 +4,11 @@ import altamirano.hernandez.app_apirest_springboot.models.Usuario;
 import altamirano.hernandez.app_apirest_springboot.utilities.Constantes;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.security.SignatureException;
 import java.util.Date;
 
 @Component
@@ -40,8 +40,8 @@ public class JwtTokenUtil {
     public boolean validateToken(String token){
         Key key = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
         try{
-//            Jwts.parser().setSigningKey(key).parseClaims(token);
-            Jwts.parserBuilder()
+//            Jwts.parserBuilder().setSigningKey(key).parseClaims(token);
+            Jwts.parser()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
@@ -54,8 +54,6 @@ public class JwtTokenUtil {
             System.out.println("JWT invalido: " + e.getMessage());
         }catch (UnsupportedJwtException e){
             System.out.println("JWT no soportado: " + e.getMessage());
-        }catch (SignatureException e){
-            System.out.println("Validacion de firma erronea");
         }
         return false;
     }
