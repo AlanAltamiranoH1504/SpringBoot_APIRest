@@ -2,6 +2,7 @@ package altamirano.hernandez.app_apirest_springboot.controllers;
 
 import altamirano.hernandez.app_apirest_springboot.models.Categoria;
 import altamirano.hernandez.app_apirest_springboot.models.DTO.CategoriaDTO;
+import altamirano.hernandez.app_apirest_springboot.models.Producto;
 import altamirano.hernandez.app_apirest_springboot.services.interfaces.ICategoriaService;
 import altamirano.hernandez.app_apirest_springboot.services.interfaces.IProductoService;
 import jakarta.validation.Valid;
@@ -109,5 +110,17 @@ public class DBController {
      */
     @Autowired
     private IProductoService iProductoService;
+    @GetMapping("/findAll-productos")
+    public ResponseEntity<?> findAllProductos(){
+        Map<String, Object> json = new HashMap<>();
+        try{
+            List<Producto> productos = iProductoService.findAll();
+            json.put("productos", productos);
+            return ResponseEntity.status(HttpStatus.OK).body(json);
+        } catch (Exception e) {
+            json.put("error", e.getMessage());
+            return ResponseEntity.status(500).body(json);
+        }
+    }
 
 }
