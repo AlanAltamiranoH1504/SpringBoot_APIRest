@@ -44,7 +44,8 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 //Rutas que no requieren proteccion
                 .requestMatchers(HttpMethod.GET, "/db/findAll-productos").permitAll()
-                .requestMatchers(HttpMethod.GET, "db/list-categorias").permitAll()
+                .requestMatchers(HttpMethod.GET, "/db/list-categorias").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
 
                 //Rutas que requieren proteccion
 
